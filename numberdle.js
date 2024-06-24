@@ -1,11 +1,32 @@
-rNum = [null, null, null, null, null];
+let rNum = [null, null, null, null, null];
+
+let currentDate = new Date().toDateString()
+let random_seed = hashCode(currentDate);
+if (random_seed < 0) {
+    random_seed *= -1;
+}
+
+function seededRandom(seed, max = 1) {
+    // Linear congruential generator (LCG)
+    let a = 1103515245;
+    let c = 12345;
+    let m = 2147483647;
+
+    seed = (seed % m + c) % m;
+
+    return function() {
+        seed = (seed * a + c) % m;
+        return seed / m * max;
+    }
+}
 
 for (let i = 0; i < 5; i++) {
-    let digit = Math.floor(Math.random() * 10);
+    let digit = Math.floor(seededRandom(random_seed, 9)());
     if (digit === 10) {
         digit -= 1;
     }
     rNum[i] = digit;
+    random_seed *= 7547;
 }
 
 let answer = rNum.join("");
@@ -17,6 +38,10 @@ let wordLength = 0;
 
 let finished = false;
 let win = false;
+
+let gameNumber = 978513;
+
+let valid_keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 document.getElementById("stats_button").addEventListener("click", show_stats_screen);
 document.getElementById("close_stats_button").addEventListener("click", disable_stats_screen);
@@ -75,6 +100,7 @@ function check_for_green(answer_array) {
     for (let i = 0; i < 5; i++) {
         if (gameState[guessNumber][i] === answer_array[i]) {
             document.getElementById("square_" + (guessNumber + 1) + "_" + (i + 1)).classList += " correct";
+            document.getElementById(gameState[guessNumber][i]).classList += " correct"
             resultsOfGuesses[guessNumber][i] = "🟩";
             answer_array[i] = null;
         }
@@ -87,6 +113,7 @@ function check_for_yellow(answer_set) {
         let letter = gameState[guessNumber][i];
         if (answer_set.has(letter)) {
             document.getElementById("square_" + (guessNumber + 1) + "_" + (i + 1)).classList += " semi";
+            document.getElementById(letter).classList += " semi"
             resultsOfGuesses[guessNumber][i] = "🟨";
             answer_set.delete(letter);
         }
@@ -98,6 +125,7 @@ function incorrect_letters() {
         let c_list = document.getElementById("square_" + (guessNumber + 1) + "_" + (i + 1)).classList;
         if (c_list[1] !== "correct" && c_list[1] !== "semi") {
             document.getElementById("square_" + (guessNumber + 1) + "_" + (i + 1)).classList += " wrong";
+            document.getElementById(gameState[guessNumber][i]).classList += " wrong"
         }
     }
     for (let i = 0; i < 5; i++) {
@@ -119,7 +147,7 @@ function check_for_win() {
     for (let i = 0; i < guessNumber + 1; i++) {
         document.getElementById("line_" + (i + 1)).innerHTML = resultsOfGuesses[i].join("");
     }
-    document.getElementById("result").innerHTML = (guessNumber + 1) + "/6 Guesses."
+    document.getElementById("result").innerHTML = (guessNumber + 1) + "/6"
     document.getElementById("share").style.display = "inline";
     game_show_stats_screen();
 }
@@ -147,12 +175,11 @@ function show_changes_screen() {
 
 async function share_button() {
 
-    var copyText = resultsOfGuesses[0].join("") + "\n";
+    var copyText = "Numberdle " + (gameNumber) + " " + (guessNumber) + "/6 Guesses.";
 
-    for (let i = 1; i < guessNumber; i++) {
-        copyText = copyText + resultsOfGuesses[i].join("") + "\n";
+    for (let i = 0; i < guessNumber; i++) {
+        copyText = copyText + "\n" + resultsOfGuesses[i].join("");
     }
-    copyText = copyText + (guessNumber) + "/6 Guesses."
 
     try {
         await copyToClipboard(copyText);
@@ -186,4 +213,30 @@ async function copyToClipboard(textToCopy) {
             textArea.remove();
         }
     }
+}
+
+document.addEventListener("keypress", function onEvent(event) {
+    let typed_key = event.key;
+    if (valid_keys.includes(typed_key)) {
+        type_letter(typed_key);
+    } else if (typed_key === "Enter") {
+        enter_button();
+    }
+});
+
+document.addEventListener("keydown", function onEvent(event) {
+    let typed_key = event.key;
+    if (typed_key === "Backspace" || typed_key === "Delete") {
+        delete_button();
+    }
+});
+
+function hashCode(string){
+    var hash = 0;
+    for (var i = 0; i < string.length; i++) {
+        var code = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+code;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
 }

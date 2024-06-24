@@ -187,10 +187,10 @@ html, body {
     display: none;
     color: white;
     width: auto;
-    font-size: x-large;
+    font-size: large;
     border-radius: 15px;
     border: 0;
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
     background-color: green;
 }
@@ -210,4 +210,11 @@ html, body {
     padding-top: 50px;
     padding: 0;
     font-size: large;
+}
+
+.list {
+    padding: 0 5px;
+    width: 325px;
+    height: 500px;
+    overflow: auto;
 }

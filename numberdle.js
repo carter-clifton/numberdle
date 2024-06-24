@@ -39,7 +39,7 @@ let wordLength = 0;
 let finished = false;
 let win = false;
 
-let gameNumber = 978513;
+let gameNumber = daysSinceJune23rd();
 
 let valid_keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
@@ -230,6 +230,22 @@ document.addEventListener("keydown", function onEvent(event) {
         delete_button();
     }
 });
+
+function daysSinceJune23rd() {
+    // Get today's date
+    const today = new Date();
+  
+    // Create a date object for June 23rd, 2024
+    const baseDate = new Date(2024, 6 - 1, 23); // Month is zero-indexed (January = 0)
+  
+    // Calculate the difference in milliseconds
+    const timeDifference = today.getTime() - baseDate.getTime();
+  
+    // Convert the difference in milliseconds to days and round down to whole days
+    const daysSince = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  
+    return daysSince;
+}
 
 function hashCode(string){
     var hash = 0;

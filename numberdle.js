@@ -175,7 +175,7 @@ function show_changes_screen() {
 
 async function share_button() {
 
-    var copyText = "Numberdle " + (gameNumber) + " " + (guessNumber) + "/6 Guesses.";
+    var copyText = "Numberdle " + (gameNumber) + " " + (guessNumber) + "/6";
 
     for (let i = 0; i < guessNumber; i++) {
         copyText = copyText + "\n" + resultsOfGuesses[i].join("");

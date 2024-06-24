@@ -11,7 +11,7 @@ html, body {
 
 .bar {
     width: 100%;
-    height: 75px;
+    height: 50px;
     border-bottom: white solid;
     margin-bottom: 10px;
     color: white;
@@ -53,8 +53,8 @@ html, body {
     font-weight: bold;
     border-radius: 15%;
     margin: 2px;
-    width: 45px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
     border: none;
     background-color: #636363;
     color: #ffffff;
@@ -65,14 +65,18 @@ html, body {
     cursor: pointer;
 }
 
+.key p {
+    margin: auto;
+    padding: 0;
+    text-transform: uppercase;
+}
+
 .special {
-    font-size: large;
-    width: 70px;
-    margin: 0 25px;
+    font-size: x-small;
 }
 
 .delete {
-    font-size: x-large;
+    font-size: medium;
 }
 
 .board {
@@ -90,8 +94,8 @@ html, body {
 .square {
     font-family: arial;
     font-weight: bold;
-    height: 65px;
-    width: 65px;
+    height: 52px;
+    width: 52px;
     margin: 5px;
     border: 2px solid #3b3b3b;
     text-align: center;

@@ -49,11 +49,14 @@ html, body {
 }
 
 .key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: x-large;
     font-weight: bold;
     border-radius: 15%;
     margin: 2px;
-    width: 58px;
+    width: 43px;
     height: 58px;
     border: none;
     background-color: #636363;
@@ -65,14 +68,9 @@ html, body {
     cursor: pointer;
 }
 
-.key p {
-    margin: auto;
-    padding: 0;
-    text-transform: uppercase;
-}
-
 .special {
     font-size: x-small;
+    width: 58px;
 }
 
 .delete {
@@ -132,6 +130,8 @@ html, body {
 .stats {
     display: none;
     position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: #222222;
@@ -148,6 +148,8 @@ html, body {
 .changes {
     display: none;
     position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: #222222;

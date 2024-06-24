@@ -145,7 +145,7 @@ function show_changes_screen() {
     document.getElementById("changes").style.display = "block";
 }
 
-function share_button() {
+async function share_button() {
 
     var copyText = resultsOfGuesses[0].join("") + "\n";
 
@@ -154,5 +154,36 @@ function share_button() {
     }
     copyText = copyText + (guessNumber) + "/6 Guesses."
 
-    navigator.clipboard.writeText(copyText);
+    try {
+        await copyToClipboard(copyText);
+    } catch(error) {
+        console.log("Something went wrong...")
+    }
+}
+
+async function copyToClipboard(textToCopy) {
+    // thank you Simon Dehaut,  from stack overflow
+    // Navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+    } else {
+        // Use the 'out of viewport hidden text area' trick
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+            
+        // Move textarea out of the viewport so it's not visible
+        textArea.style.position = "absolute";
+        textArea.style.left = "-999999px";
+            
+        document.body.prepend(textArea);
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            textArea.remove();
+        }
+    }
 }

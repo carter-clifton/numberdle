@@ -234,16 +234,16 @@ document.addEventListener("keydown", function onEvent(event) {
 function daysSinceJune23rd() {
     // Get today's date
     const today = new Date();
-  
+
     // Create a date object for June 23rd, 2024
     const baseDate = new Date(2024, 6 - 1, 23); // Month is zero-indexed (January = 0)
-  
+
     // Calculate the difference in milliseconds
     const timeDifference = today.getTime() - baseDate.getTime();
-  
+
     // Convert the difference in milliseconds to days and round down to whole days
     const daysSince = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
+
     return daysSince;
 }
 
